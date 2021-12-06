@@ -4,10 +4,18 @@ from django.contrib import admin
 
 from django.urls import path, include
 
+api_urlpatterns = [
+    path('accounts/', include('rest_registration.api.urls')),
+]
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/', include('api.urls')),
+    path('api/v1/', include(api_urlpatterns)),
+
+    path('', include('books.urls')),
+    path('news/', include('blog.urls')),
+    path('user/', include('accounts.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
