@@ -1,5 +1,23 @@
 from rest_framework import serializers
-from books.models import CategoryModel, BookModel, FormatModel
+from books.models import CategoryModel, BookModel, FormatModel, AuthorModal, LanguageModel, PublisherModel
+
+
+class LanguageModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LanguageModel
+        fields = '__all__'
+
+
+class PublisherModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PublisherModel
+        fields = '__all__'
+
+
+class AuthorModalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AuthorModal
+        fields = '__all__'
 
 
 class FormatModelSerializer(serializers.ModelSerializer):

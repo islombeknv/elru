@@ -2,9 +2,24 @@ from django.urls import path
 
 from books.views import *
 
-app_name = 'api'
+app_name = ''
 
 urlpatterns = [
+    path('languages/', LanguageListAPIView.as_view()),
+    path('language/create/', LanguageCreateAPIView.as_view()),
+    path('language/update/<int:pk>/', LanguageUpdateAPIView.as_view()),
+    path('language/delate/<int:pk>/', LanguageDelateAPIView.as_view()),
+
+    path('publishers/', PublisherListAPIView.as_view()),
+    path('publisher/create/', PublisherCreateAPIView.as_view()),
+    path('publisher/update/<int:pk>/', PublisherUpdateAPIView.as_view()),
+    path('publisher/delate/<int:pk>/', PublisherDelateAPIView.as_view()),
+
+    path('author/', AuthorListAPIView.as_view()),
+    path('author/create/', AuthorCreateAPIView.as_view()),
+    path('author/update/<int:pk>/', AuthorUpdateAPIView.as_view()),
+    path('author/delate/<int:pk>/', AuthorDelateAPIView.as_view()),
+
     path('books/', BookListAPIView.as_view()),
     path('books/<int:pk>/', BookRetrieveAPIView.as_view()),
     path('books/create/', BookCreateAPIView.as_view()),
