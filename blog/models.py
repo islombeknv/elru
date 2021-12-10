@@ -2,9 +2,11 @@ from django.db import models
 
 
 class PostModel(models.Model):
+    image = models.ImageField(upload_to='image')
+    image1 = models.ImageField(upload_to='image')
+    image2 = models.ImageField(upload_to='image')
     title = models.CharField(max_length=250)
     info = models.CharField(max_length=512)
-    image = models.ImageField(upload_to='posts', blank=True, null=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

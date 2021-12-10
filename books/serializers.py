@@ -29,22 +29,23 @@ class FormatModelSerializer(serializers.ModelSerializer):
 class CategoryModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
-        exclude = ['created_at', 'updated_at']
+        exclude = ['created_at', 'updated_at', 'title']
 
 
 class BookModelSerializer(serializers.ModelSerializer):
-    category = CategoryModelSerializer()
-    format = FormatModelSerializer()
-
     class Meta:
         model = BookModel
-        exclude = ['created_at', 'updated_at']
+        exclude = ['created_at', 'updated_at', 'book_view',
+                   'title', 'description', 'paper_dic_price', 'audio_dic_price',
+                   'pdf_dic_price',]
 
 
-class BookModelUpdateSerializer(serializers.ModelSerializer):
-    category = CategoryModelSerializer()
-    format = FormatModelSerializer()
-
+class AdminBookModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookModel
-        exclude = ['book_view', 'created_at', 'updated_at']
+        exclude = ['created_at', 'updated_at', 'book_view',
+                   'title', 'description',
+                   'paper_dic_price', 'audio_dic_price',
+                   'pdf_dic_price',
+                   ]
+

@@ -1,9 +1,12 @@
+from django.db.models import Q
+from rest_framework import status
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from datetime import datetime
 import pytz
 from rest_framework.generics import ListAPIView, \
-    RetrieveAPIView, CreateAPIView, RetrieveUpdateAPIView, \
-    DestroyAPIView, get_object_or_404
+    RetrieveAPIView, CreateAPIView, RetrieveUpdateAPIView, get_object_or_404
+
 from books.serializers import *
 from books.models import *
 
@@ -25,14 +28,17 @@ class LanguageCreateAPIView(CreateAPIView):
     queryset = LanguageModel.objects.order_by('-pk')
 
 
-class LanguageDelateAPIView(DestroyAPIView):
-    serializer_class = LanguageModelSerializer
-    queryset = LanguageModel.objects.order_by('-pk')
-
-
 class LanguageUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = LanguageModelSerializer
     queryset = LanguageModel.objects.order_by('-pk')
+
+
+@api_view(['GET', 'POST'])
+def LanguageDelateAPIView(request):
+    tab = request.GET.getlist('option')
+    for i in tab:
+        LanguageModel.objects.get(id=i).delete()
+    return Response(status=status.HTTP_200_OK)
 
 
 # ------------------------------------------------------------------------
@@ -40,7 +46,7 @@ class PublisherListAPIView(ListAPIView):
     serializer_class = PublisherModelSerializer
 
     def get_queryset(self):
-        pk = self.kwargs.get('q')
+        pk = self.request.GET.get('q')
         if pk:
             return PublisherModel.objects.filter(id=pk)
         return PublisherModel.objects.order_by('-pk')
@@ -51,14 +57,17 @@ class PublisherCreateAPIView(CreateAPIView):
     queryset = PublisherModel.objects.order_by('-pk')
 
 
-class PublisherDelateAPIView(DestroyAPIView):
-    serializer_class = PublisherModelSerializer
-    queryset = PublisherModel.objects.order_by('-pk')
-
-
 class PublisherUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = PublisherModelSerializer
     queryset = PublisherModel.objects.order_by('-pk')
+
+
+@api_view(['GET', 'POST'])
+def PublisherDelateAPIView(request):
+    tab = request.GET.getlist('option')
+    for i in tab:
+        PublisherModel.objects.get(id=i).delete()
+    return Response(status=status.HTTP_200_OK)
 
 
 # ------------------------------------------------------------------------
@@ -66,7 +75,7 @@ class AuthorListAPIView(ListAPIView):
     serializer_class = AuthorModalSerializer
 
     def get_queryset(self):
-        pk = self.kwargs.get('q')
+        pk = self.request.GET.get('q')
         if pk:
             return AuthorModal.objects.filter(id=pk)
         return AuthorModal.objects.order_by('-pk')
@@ -77,20 +86,52 @@ class AuthorCreateAPIView(CreateAPIView):
     queryset = AuthorModal.objects.order_by('-pk')
 
 
-class AuthorDelateAPIView(DestroyAPIView):
-    serializer_class = AuthorModalSerializer
-    queryset = AuthorModal.objects.order_by('-pk')
-
-
 class AuthorUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = AuthorModalSerializer
     queryset = AuthorModal.objects.order_by('-pk')
+
+
+@api_view(['GET', 'POST'])
+def AuthorDelateAPIView(request):
+    tab = request.GET.getlist('option')
+    for i in tab:
+        AuthorModal.objects.get(id=i).delete()
+    return Response(status=status.HTTP_200_OK)
 
 
 # ------------------------------------------------------------------------
 class BookListAPIView(ListAPIView):  # 1 oylik top kitoblar
     serializer_class = BookModelSerializer
     queryset = BookModel.objects.filter(created_at__month=today.month).order_by('-book_view')
+
+
+class AdminBookListAPIView(ListAPIView):
+    serializer_class = BookModelSerializer
+
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+        aut = self.request.GET.get('aut')
+        cat = self.request.GET.get('cat')
+        num = self.request.GET.get('num')
+        form = self.request.GET.get('form')
+        tip = self.request.GET.get('tip')
+        qs = BookModel.objects.all()
+        if q:
+            qs = qs.filter(Q(title_uz__icontains=q) |
+                           Q(title_ru__icontains=q) |
+                           Q(title_en__icontains=q)
+                           )
+        if aut:
+            qs = qs.filter(author__name__icontains=aut)
+        if cat:
+            qs = qs.filter(category__title__icontains=cat)
+        if num:
+            qs = qs.filter(print_length=num)
+        if form:
+            qs = qs.filter(form__icontains=form)
+        if tip:
+            qs = qs.filter(tip__icontains=tip)
+        return qs
 
 
 class BookRetrieveAPIView(RetrieveAPIView):
@@ -107,18 +148,22 @@ class BookRetrieveAPIView(RetrieveAPIView):
 
 
 class BookCreateAPIView(CreateAPIView):
-    serializer_class = BookModelSerializer
-    queryset = BookModel.objects.order_by('-pk')
-
-
-class BookDelateAPIView(DestroyAPIView):
-    serializer_class = BookModelSerializer
+    serializer_class = AdminBookModelSerializer
     queryset = BookModel.objects.order_by('-pk')
 
 
 class BookUpdateAPIView(RetrieveUpdateAPIView):
-    serializer_class = BookModelUpdateSerializer
+    serializer_class = AdminBookModelSerializer
     queryset = BookModel.objects.order_by('-pk')
+
+
+@api_view(['GET', 'POST'])
+def BookDelateAPIView(request):
+    tab = request.GET.getlist('option')
+    print(tab)
+    for i in tab:
+        BookModel.objects.get(id=i).delete()
+    return Response(status=status.HTTP_200_OK)
 
 
 # ------------------------------------------------------------------------
@@ -127,7 +172,7 @@ class CategoryListAPIView(ListAPIView):
     queryset = CategoryModel.objects.order_by('-pk')
 
     def get_queryset(self):
-        pk = self.kwargs.get('q')
+        pk = self.request.GET.get('q')
         if pk:
             return CategoryModel.objects.filter(id=pk)
         return CategoryModel.objects.order_by('-pk')
@@ -143,27 +188,9 @@ class CategoryUpdateAPIView(RetrieveUpdateAPIView):
     queryset = CategoryModel.objects.order_by('-pk')
 
 
-class CategoryDelateAPIView(DestroyAPIView):
-    serializer_class = CategoryModelSerializer
-    queryset = CategoryModel.objects.order_by('-pk')
-
-
-# ------------------------------------------------------------------------
-class FormatListAPIView(ListAPIView):
-    serializer_class = FormatModelSerializer
-    queryset = FormatModel.objects.order_by('-pk')
-
-
-class FormatCreateAPIView(CreateAPIView):
-    serializer_class = FormatModelSerializer
-    queryset = FormatModel.objects.order_by('-pk')
-
-
-class FormatUpdateAPIView(RetrieveUpdateAPIView):
-    serializer_class = FormatModelSerializer
-    queryset = FormatModel.objects.order_by('-pk')
-
-
-class FormatDelateAPIView(DestroyAPIView):
-    serializer_class = FormatModelSerializer
-    queryset = FormatModel.objects.order_by('-pk')
+@api_view(['GET', 'POST'])
+def CategoryDelateAPIView(request):
+    tab = request.GET.getlist('option')
+    for i in tab:
+        CategoryModel.objects.get(id=i).delete()
+    return Response(status=status.HTTP_200_OK)
