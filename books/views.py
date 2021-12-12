@@ -7,6 +7,7 @@ import pytz
 from rest_framework.generics import ListAPIView, \
     RetrieveAPIView, CreateAPIView, RetrieveUpdateAPIView, get_object_or_404
 
+from accounts.serializers import UserProfileSerializer
 from books.serializers import *
 from books.models import *
 
@@ -147,6 +148,15 @@ class BookRetrieveAPIView(RetrieveAPIView):
         return Response(serializer.data)
 
 
+# class BookRelatedListView(ListAPIView):
+#     serializer_class = BookModelSerializer
+#
+#     def get_queryset(self):
+#         book = BookModel.objects.filter(id=self.kwargs.get('pk')).values('category')
+#         print(book.strip('['))
+#         # return BookModel.objects.filter(category_id=self.category_id).exclude(pk=self.pk)
+
+
 class BookCreateAPIView(CreateAPIView):
     serializer_class = AdminBookModelSerializer
     queryset = BookModel.objects.order_by('-pk')
@@ -178,6 +188,17 @@ class CategoryListAPIView(ListAPIView):
         return CategoryModel.objects.order_by('-pk')
 
 
+class CategoryRetrieveAPIViewAPIView(ListAPIView):
+    serializer_class = BookModelSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        print(pk)
+        if pk:
+            return BookModel.objects.filter(category_id=pk)
+        return BookModel.objects.order_by('-pk')
+
+
 class CategoryCreateAPIView(CreateAPIView):
     serializer_class = CategoryModelSerializer
     queryset = CategoryModel.objects.order_by('-pk')
@@ -194,3 +215,29 @@ def CategoryDelateAPIView(request):
     for i in tab:
         CategoryModel.objects.get(id=i).delete()
     return Response(status=status.HTTP_200_OK)
+
+
+class CommentCreateAPIView(CreateAPIView):
+    serializer_class = CommentModelSerializer
+
+    def create(self, request, *args, **kwargs):
+        user = UserModel.objects.get(username=request.user)
+        book = BookModel.objects.get(id=self.kwargs.get('pk'))
+        comment = self.request.POST.get('comment')
+        CommentModel.objects.create(user=user, book=book, comment=comment)
+        return Response(status=status.HTTP_200_OK)
+
+
+class CommmentListAPIView(ListAPIView):
+    serializer_class = CommentListSerializer
+
+    def get_queryset(self):
+        book = BookModel.objects.get(id=self.kwargs.get('pk'))
+        return CommentModel.objects.filter(book=book)
+
+
+class CommmentAouthorListAPIView(ListAPIView):
+    serializer_class = UserProfileSerializer
+
+    def get_queryset(self):
+        return UserModel.objects.filter(id=self.kwargs.get('pk'))

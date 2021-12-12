@@ -12,8 +12,8 @@ api_urlpatterns = [
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api/v1/', include(api_urlpatterns)),
+    path('auth/', include('rest_framework.urls')),
+    path('auth/api/', include(api_urlpatterns)),
     path('', include('books.urls')),
     path('news/', include('blog.urls')),
     path('user/', include('accounts.urls')),

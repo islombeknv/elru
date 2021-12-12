@@ -1,5 +1,6 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from books.models import CategoryModel, BookModel, FormatModel, AuthorModal, LanguageModel, PublisherModel
+from books.models import CategoryModel, BookModel, AuthorModal, LanguageModel, PublisherModel, CommentModel
 
 
 class LanguageModelSerializer(serializers.ModelSerializer):
@@ -20,12 +21,6 @@ class AuthorModalSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class FormatModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FormatModel
-        fields = '__all__'
-
-
 class CategoryModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
@@ -37,7 +32,7 @@ class BookModelSerializer(serializers.ModelSerializer):
         model = BookModel
         exclude = ['created_at', 'updated_at', 'book_view',
                    'title', 'description', 'paper_dic_price', 'audio_dic_price',
-                   'pdf_dic_price',]
+                   'pdf_dic_price', ]
 
 
 class AdminBookModelSerializer(serializers.ModelSerializer):
@@ -49,3 +44,14 @@ class AdminBookModelSerializer(serializers.ModelSerializer):
                    'pdf_dic_price',
                    ]
 
+
+class CommentModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CommentModel
+        fields = ['comment']
+
+
+class CommentListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CommentModel
+        fields = '__all__'

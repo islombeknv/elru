@@ -130,3 +130,4 @@ REST_REGISTRATION = {
 
     'VERIFICATION_FROM_EMAIL': 'islomjon2702@gmail.com',
 }
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"

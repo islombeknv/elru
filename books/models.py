@@ -1,6 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from multiselectfield import MultiSelectField
+
+UserModel = get_user_model()
 
 BFORMAT = (
     ('paper', 'PAPER'),
@@ -53,19 +56,6 @@ class AuthorModal(models.Model):
     class Meta:
         verbose_name = 'Author'
         verbose_name_plural = 'Authors'
-
-
-class FormatModel(models.Model):
-    title = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'format'
-        verbose_name_plural = 'format'
 
 
 class CategoryModel(models.Model):
@@ -132,3 +122,17 @@ class BookModel(models.Model):
     class Meta:
         verbose_name = 'book'
         verbose_name_plural = 'books'
+
+
+class CommentModel(models.Model):
+    book = models.ForeignKey(BookModel, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE, null=True, blank=True)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.comment} {self.user}'
+
+    class Meta:
+        verbose_name = 'comment'
+        verbose_name_plural = 'commets'

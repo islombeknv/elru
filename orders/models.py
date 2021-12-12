@@ -9,22 +9,20 @@ UserModel = get_user_model()
 class OrderModel(models.Model):
     user = models.ForeignKey(UserModel, related_name='orders', on_delete=models.CASCADE)
     products = models.ManyToManyField(BookModel, related_name='order')
-    price = models.FloatField(null=True)
-
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
     phone = models.CharField(max_length=30)
-    country = models.CharField(max_length=30)
-    address1 = models.CharField(max_length=30)
-    address2 = models.CharField(max_length=30)
-    city = models.CharField(max_length=30)
-    state = models.CharField(max_length=30)
-    postcode = models.CharField(max_length=30)
+    full_name = models.CharField(max_length=255)
+    territory = models.CharField(max_length=100)
+    city_district = models.CharField(max_length=100)
+    locality = models.CharField(max_length=50)
+    postcode = models.CharField(max_length=50)
+    address1 = models.CharField(max_length=300)
+    note = models.CharField(max_length=300)
+    price = models.FloatField(null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{str(self.user.profile)}'
+        return f'{str(self.user)}'
 
     class Meta:
         verbose_name = 'order'

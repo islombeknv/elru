@@ -1,9 +1,17 @@
-from rest_framework import status
-from rest_framework.generics import GenericAPIView
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.contrib.sessions.backends.cache import SessionStore
+from django.contrib.sessions.models import Session
+from rest_framework import status, permissions
+from rest_framework.decorators import api_view
+from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView, DestroyAPIView
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from accounts.models import ProfileModel
-from accounts.serializers import CreateUserProfileSerializer
+from accounts.serializers import CreateUserProfileSerializer, UserProfileSerializer, PasswordSerializer
+
+UserModel = get_user_model()
 
 
 class RegistrationAPI(GenericAPIView):
@@ -13,5 +21,28 @@ class RegistrationAPI(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        data = ProfileModel.objects.create(user=self.request.POST.get('username'))
-        return Response(data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)
+
+
+class UserListAPIView(ListAPIView):
+    serializer_class = UserProfileSerializer
+
+    def get_queryset(self):
+        user = self.request.GET.get('user')
+        qs = UserModel.objects.all()
+        if user:
+            qs = qs.filter(username=user)
+        return qs
+
+
+class ChangePasUpdateAPIView(RetrieveUpdateAPIView):
+    serializer_class = PasswordSerializer
+    queryset = UserModel.objects.all()
+
+
+@api_view(['POST'])
+@login_required(login_url='/auth/login/')
+def DeleteAccount(request):
+    UserModel.objects.get(username=request.user).delete()
+    return Response(status=status.HTTP_200_OK)
+

@@ -1,9 +1,8 @@
-from unicodedata import category
-
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
-from books.models import BookModel, CategoryModel, FormatModel, AuthorModal, LanguageModel, PublisherModel
+from books.models import BookModel, CategoryModel,\
+    AuthorModal, LanguageModel, PublisherModel, CommentModel
 
 
 class MyTranslationAdmin(TranslationAdmin):
@@ -46,5 +45,4 @@ class PublisherModelAdmin(admin.ModelAdmin):
 class PublisherModelAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
-
-admin.site.register(FormatModel)
+admin.site.register(CommentModel)
