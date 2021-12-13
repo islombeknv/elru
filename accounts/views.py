@@ -1,13 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.sessions.backends.cache import SessionStore
-from django.contrib.sessions.models import Session
-from rest_framework import status, permissions
+from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView, DestroyAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateAPIView
 from rest_framework.response import Response
-from rest_framework.views import APIView
+
 
 from accounts.serializers import CreateUserProfileSerializer, UserProfileSerializer, PasswordSerializer
 

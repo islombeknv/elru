@@ -6,10 +6,8 @@ from datetime import datetime
 import pytz
 from rest_framework.generics import ListAPIView, \
     RetrieveAPIView, CreateAPIView, RetrieveUpdateAPIView, get_object_or_404
-
-from accounts.serializers import UserProfileSerializer
-from books.serializers import *
 from books.models import *
+from books.serializers import *
 
 today = datetime.now(pytz.timezone('Asia/Tashkent'))
 
@@ -148,13 +146,11 @@ class BookRetrieveAPIView(RetrieveAPIView):
         return Response(serializer.data)
 
 
-# class BookRelatedListView(ListAPIView):
-#     serializer_class = BookModelSerializer
-#
-#     def get_queryset(self):
-#         book = BookModel.objects.filter(id=self.kwargs.get('pk')).values('category')
-#         print(book.strip('['))
-#         # return BookModel.objects.filter(category_id=self.category_id).exclude(pk=self.pk)
+class BookRelatedListView(ListAPIView):
+    serializer_class = UserBookModelSerializer
+
+    def get_queryset(self):
+        return BookModel.objects.filter(category_id=self.kwargs.get('pk'))
 
 
 class BookCreateAPIView(CreateAPIView):
@@ -221,11 +217,11 @@ class CommentCreateAPIView(CreateAPIView):
     serializer_class = CommentModelSerializer
 
     def create(self, request, *args, **kwargs):
-        user = UserModel.objects.get(username=request.user)
+        user = ProfileModel.objects.get(user=request.user)
         book = BookModel.objects.get(id=self.kwargs.get('pk'))
         comment = self.request.POST.get('comment')
         CommentModel.objects.create(user=user, book=book, comment=comment)
-        return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_201_CREATED)
 
 
 class CommmentListAPIView(ListAPIView):
@@ -236,8 +232,3 @@ class CommmentListAPIView(ListAPIView):
         return CommentModel.objects.filter(book=book)
 
 
-class CommmentAouthorListAPIView(ListAPIView):
-    serializer_class = UserProfileSerializer
-
-    def get_queryset(self):
-        return UserModel.objects.filter(id=self.kwargs.get('pk'))

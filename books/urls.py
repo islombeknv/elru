@@ -2,8 +2,6 @@ from django.urls import path
 
 from books.views import *
 
-app_name = ''
-
 urlpatterns = [
     path('languages/', LanguageListAPIView.as_view()),
     path('language/create/', LanguageCreateAPIView.as_view()),
@@ -22,7 +20,7 @@ urlpatterns = [
 
     path('books/', AdminBookListAPIView.as_view()),
     path('books/<int:pk>/', BookRetrieveAPIView.as_view()),
-    # path('books/releted/<int:pk>/', BookRelatedListView.as_view()),
+    path('books/releted/<int:pk>/', BookRelatedListView.as_view()),
     path('books/create/', BookCreateAPIView.as_view()),
     path('books/update/<int:pk>/', BookUpdateAPIView.as_view()),
     path('books/delete/', BookDelateAPIView),
@@ -35,7 +33,6 @@ urlpatterns = [
 
     path('comment/create/<int:pk>/', CommentCreateAPIView.as_view()),
     path('comment/list/<int:pk>/', CommmentListAPIView.as_view()),
-    path('comment/author/<int:pk>/', CommmentAouthorListAPIView.as_view()),
 
 
 

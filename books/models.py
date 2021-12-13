@@ -3,6 +3,8 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from multiselectfield import MultiSelectField
 
+from accounts.models import ProfileModel
+
 UserModel = get_user_model()
 
 BFORMAT = (
@@ -126,7 +128,7 @@ class BookModel(models.Model):
 
 class CommentModel(models.Model):
     book = models.ForeignKey(BookModel, on_delete=models.CASCADE, null=True, blank=True)
-    user = models.ForeignKey(UserModel, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(ProfileModel, on_delete=models.CASCADE, null=True, blank=True)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -3,6 +3,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 
+from accounts.models import ProfileModel
+
 User = get_user_model()
 
 
@@ -20,6 +22,15 @@ class CreateUserProfileSerializer(ModelSerializer):
 class UserProfileSerializer(ModelSerializer):
     class Meta:
         model = User
+        exclude = ['password', 'last_login', 'is_superuser',
+                   'is_staff', 'date_joined', 'groups', 'user_permissions']
+
+
+class UserProfile2Serializer(ModelSerializer):
+    user = UserProfileSerializer()
+
+    class Meta:
+        model = ProfileModel
         fields = '__all__'
 
 
