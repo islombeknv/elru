@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-8u-u__7(z&39j)8u17q^pqw0^l+o(e4a=__m(qg%++-y(3f7+7'
+SECRET_KEY = ''
 
 DEBUG = True
 
