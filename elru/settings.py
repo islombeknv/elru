@@ -10,6 +10,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+PAYCOM_SETTINGS = {
+    "KASSA_ID": "616fdc4be07835ed4c75794d",  # token
+    "SECRET_KEY": "F2v4yVFvMnrSaThob2XoHgoTI#ffcE6v%ukP",  # password
+    "ACCOUNTS": {
+        "KEY": "TG9naW46UGFzcw"
+    },
+    "TOKEN": "616fdc4be07835ed4c75794d"
+}
+
 INSTALLED_APPS = [
     'modeltranslation',
     'django.contrib.admin',
@@ -19,13 +28,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'paycomuz',
+    'clickuz',
     'rest_registration',
+    'payments',
     'accounts',
     'books',
     'orders',
     'blog',
     'blocks',
 ]
+
+CLICK_SETTINGS = {
+    'service_id': '17730',
+    'merchant_id': '12850',
+    'secret_key': 'EbJy7zizjtfz',
+    'merchant_user_id': '19565'
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -128,6 +147,6 @@ REST_REGISTRATION = {
     'RESET_PASSWORD_VERIFICATION_URL': 'https://frontend-host/reset-password/',
     'REGISTER_EMAIL_VERIFICATION_URL': 'https://frontend-host/verify-email/',
 
-    'VERIFICATION_FROM_EMAIL': 'islomjon2702@gmail.com',
+    'VERIFICATION_FROM_EMAIL': 'mobzoomtv@gmail.com',
 }
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"

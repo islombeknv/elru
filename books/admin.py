@@ -1,8 +1,8 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
-from books.models import BookModel, CategoryModel,\
-    AuthorModal, LanguageModel, PublisherModel, CommentModel
+from books.models import BookModel, CategoryModel, \
+    AuthorModal, LanguageModel, PublisherModel, CommentModel, AdminCommentModel
 
 
 class MyTranslationAdmin(TranslationAdmin):
@@ -45,4 +45,6 @@ class PublisherModelAdmin(admin.ModelAdmin):
 class PublisherModelAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
+
 admin.site.register(CommentModel)
+admin.site.register(AdminCommentModel)

@@ -23,11 +23,11 @@ class UserProfileSerializer(ModelSerializer):
     class Meta:
         model = User
         exclude = ['password', 'last_login', 'is_superuser',
-                   'is_staff', 'date_joined', 'groups', 'user_permissions']
+                   'is_staff', 'groups', 'user_permissions']
 
 
 class UserProfile2Serializer(ModelSerializer):
-    user = UserProfileSerializer()
+    user = UserProfileSerializer(read_only=True)
 
     class Meta:
         model = ProfileModel

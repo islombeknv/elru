@@ -27,4 +27,7 @@ urlpatterns = [
     path('network/create/', NetworkCreateAPIView.as_view()),
     path('network/update/<int:pk>/', NetworkUpdateAPIView.as_view()),
     path('network/delete/<int:pk>/', NetworkDelateAPIView.as_view()),
+
+    path('application/create/', ApplicationsCreateAPIView.as_view()),
+    path('application/list/', ApplicationsListAPIView.as_view()),
 ]

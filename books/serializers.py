@@ -1,25 +1,25 @@
 from rest_framework import serializers
 
 from accounts.serializers import UserProfile2Serializer
-from books.models import CategoryModel, BookModel, AuthorModal, LanguageModel, PublisherModel, CommentModel
+from books.models import *
 
 
 class LanguageModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = LanguageModel
-        fields = '__all__'
+        exclude = ['created_at', 'updated_at']
 
 
 class PublisherModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = PublisherModel
-        fields = '__all__'
+        exclude = ['created_at', 'updated_at', 'title']
 
 
 class AuthorModalSerializer(serializers.ModelSerializer):
     class Meta:
         model = AuthorModal
-        fields = '__all__'
+        exclude = ['created_at', 'updated_at', 'name']
 
 
 class CategoryModelSerializer(serializers.ModelSerializer):
@@ -29,11 +29,15 @@ class CategoryModelSerializer(serializers.ModelSerializer):
 
 
 class BookModelSerializer(serializers.ModelSerializer):
+    category = CategoryModelSerializer()
+    publisher = PublisherModelSerializer()
+    author = AuthorModalSerializer()
+    languages = LanguageModelSerializer(many=True)
+
     class Meta:
         model = BookModel
         exclude = ['created_at', 'updated_at', 'book_view',
-                   'title', 'description', 'paper_dic_price', 'audio_dic_price',
-                   'pdf_dic_price', ]
+                   'title', 'description', 'audio_file', 'pdf_file']
 
 
 class AdminBookModelSerializer(serializers.ModelSerializer):
@@ -44,18 +48,6 @@ class AdminBookModelSerializer(serializers.ModelSerializer):
                    'paper_dic_price', 'audio_dic_price',
                    'pdf_dic_price',
                    ]
-
-
-class UserBookModelSerializer(serializers.ModelSerializer):
-    # languages = LanguageModelSerializer(many=True)
-    # publisher = PublisherModelSerializer()
-    # author = AuthorModalSerializer()
-    # category = CategoryModelSerializer()
-
-    class Meta:
-        model = BookModel
-        exclude = ['created_at', 'updated_at', 'book_view',
-                   'title', 'description', 'audio_file', 'pdf_file']
 
 
 class CommentModelSerializer(serializers.ModelSerializer):
@@ -70,3 +62,15 @@ class CommentListSerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentModel
         fields = '__all__'
+
+
+class AdminCommentListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdminCommentModel
+        fields = '__all__'
+
+
+class ReplyCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdminCommentModel
+        fields = ['text']

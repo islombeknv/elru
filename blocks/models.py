@@ -78,3 +78,14 @@ class NetworkModal(models.Model):
         verbose_name = 'network'
         verbose_name_plural = 'networks'
 
+
+class ApplicationsModel(models.Model):
+    number = models.CharField(max_length=13)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.number
+
+    class Meta:
+        verbose_name = 'application'
+        verbose_name_plural = 'applications'

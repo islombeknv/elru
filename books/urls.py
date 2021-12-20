@@ -33,7 +33,7 @@ urlpatterns = [
 
     path('comment/create/<int:pk>/', CommentCreateAPIView.as_view()),
     path('comment/list/<int:pk>/', CommmentListAPIView.as_view()),
-
-
+    path('comment/reply/list/<int:pk>/', AdmCommentListSerializer.as_view()),
+    path('comment/reply/create/<int:pk>/', AdminCommentCreateAPIView.as_view()),
 
 ]

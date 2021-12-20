@@ -102,9 +102,9 @@ class BookModel(models.Model):
 
     book_view = models.IntegerField(default=0, blank=True)
 
-    image = models.ImageField(upload_to='images', blank=True)
-    image1 = models.ImageField(upload_to='images', blank=True)
-    image2 = models.ImageField(upload_to='images', blank=True)
+    image = models.ImageField(upload_to='images', blank=True, null=True)
+    image1 = models.ImageField(upload_to='images', blank=True, null=True)
+    image2 = models.ImageField(upload_to='images', blank=True, null=True)
 
     def paper_disc(self):
         return self.paper_discount != 0
@@ -133,8 +133,22 @@ class CommentModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.comment} {self.user}'
+        return f'{self.comment}'
 
     class Meta:
         verbose_name = 'comment'
         verbose_name_plural = 'commets'
+
+
+class AdminCommentModel(models.Model):
+    com = models.ForeignKey(CommentModel, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE, null=True, blank=True)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user}'
+
+    class Meta:
+        verbose_name = 'Admin comment'
+        verbose_name_plural = 'Admin commets'

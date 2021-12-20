@@ -1,19 +1,21 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from datetime import datetime
+from books.serializers import *
 import pytz
 from rest_framework.generics import ListAPIView, \
     RetrieveAPIView, CreateAPIView, RetrieveUpdateAPIView, get_object_or_404
-from books.models import *
-from books.serializers import *
 
 today = datetime.now(pytz.timezone('Asia/Tashkent'))
 
 
 class LanguageListAPIView(ListAPIView):
     serializer_class = LanguageModelSerializer
+    permission_classes = [IsAdminUser]
 
     def get_queryset(self):
         pk = self.kwargs.get('q')
@@ -25,14 +27,17 @@ class LanguageListAPIView(ListAPIView):
 class LanguageCreateAPIView(CreateAPIView):
     serializer_class = LanguageModelSerializer
     queryset = LanguageModel.objects.order_by('-pk')
+    permission_classes = [IsAdminUser]
 
 
 class LanguageUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = LanguageModelSerializer
     queryset = LanguageModel.objects.order_by('-pk')
+    permission_classes = [IsAdminUser]
 
 
 @api_view(['GET', 'POST'])
+@login_required
 def LanguageDelateAPIView(request):
     tab = request.GET.getlist('option')
     for i in tab:
@@ -43,6 +48,7 @@ def LanguageDelateAPIView(request):
 # ------------------------------------------------------------------------
 class PublisherListAPIView(ListAPIView):
     serializer_class = PublisherModelSerializer
+    permission_classes = [IsAdminUser]
 
     def get_queryset(self):
         pk = self.request.GET.get('q')
@@ -54,14 +60,17 @@ class PublisherListAPIView(ListAPIView):
 class PublisherCreateAPIView(CreateAPIView):
     serializer_class = PublisherModelSerializer
     queryset = PublisherModel.objects.order_by('-pk')
+    permission_classes = [IsAdminUser]
 
 
 class PublisherUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = PublisherModelSerializer
     queryset = PublisherModel.objects.order_by('-pk')
+    permission_classes = [IsAdminUser]
 
 
 @api_view(['GET', 'POST'])
+@login_required
 def PublisherDelateAPIView(request):
     tab = request.GET.getlist('option')
     for i in tab:
@@ -72,6 +81,7 @@ def PublisherDelateAPIView(request):
 # ------------------------------------------------------------------------
 class AuthorListAPIView(ListAPIView):
     serializer_class = AuthorModalSerializer
+    permission_classes = [IsAdminUser]
 
     def get_queryset(self):
         pk = self.request.GET.get('q')
@@ -83,14 +93,17 @@ class AuthorListAPIView(ListAPIView):
 class AuthorCreateAPIView(CreateAPIView):
     serializer_class = AuthorModalSerializer
     queryset = AuthorModal.objects.order_by('-pk')
+    permission_classes = [IsAdminUser]
 
 
 class AuthorUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = AuthorModalSerializer
     queryset = AuthorModal.objects.order_by('-pk')
+    permission_classes = [IsAdminUser]
 
 
 @api_view(['GET', 'POST'])
+@login_required
 def AuthorDelateAPIView(request):
     tab = request.GET.getlist('option')
     for i in tab:
@@ -99,13 +112,14 @@ def AuthorDelateAPIView(request):
 
 
 # ------------------------------------------------------------------------
-class BookListAPIView(ListAPIView):  # 1 oylik top kitoblar
+class BookListAPIView(ListAPIView):  # user uchun
     serializer_class = BookModelSerializer
-    queryset = BookModel.objects.filter(created_at__month=today.month).order_by('-book_view')
+    queryset = BookModel.objects.order_by('-pk')
 
 
 class AdminBookListAPIView(ListAPIView):
     serializer_class = BookModelSerializer
+    permission_classes = [IsAdminUser]
 
     def get_queryset(self):
         q = self.request.GET.get('q')
@@ -147,7 +161,7 @@ class BookRetrieveAPIView(RetrieveAPIView):
 
 
 class BookRelatedListView(ListAPIView):
-    serializer_class = UserBookModelSerializer
+    serializer_class = BookModelSerializer
 
     def get_queryset(self):
         return BookModel.objects.filter(category_id=self.kwargs.get('pk'))
@@ -156,14 +170,17 @@ class BookRelatedListView(ListAPIView):
 class BookCreateAPIView(CreateAPIView):
     serializer_class = AdminBookModelSerializer
     queryset = BookModel.objects.order_by('-pk')
+    permission_classes = [IsAdminUser]
 
 
 class BookUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = AdminBookModelSerializer
     queryset = BookModel.objects.order_by('-pk')
+    permission_classes = [IsAdminUser]
 
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAdminUser])
 def BookDelateAPIView(request):
     tab = request.GET.getlist('option')
     print(tab)
@@ -189,7 +206,6 @@ class CategoryRetrieveAPIViewAPIView(ListAPIView):
 
     def get_queryset(self):
         pk = self.kwargs.get('pk')
-        print(pk)
         if pk:
             return BookModel.objects.filter(category_id=pk)
         return BookModel.objects.order_by('-pk')
@@ -198,14 +214,17 @@ class CategoryRetrieveAPIViewAPIView(ListAPIView):
 class CategoryCreateAPIView(CreateAPIView):
     serializer_class = CategoryModelSerializer
     queryset = CategoryModel.objects.order_by('-pk')
+    permission_classes = [IsAdminUser]
 
 
 class CategoryUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = CategoryModelSerializer
     queryset = CategoryModel.objects.order_by('-pk')
+    permission_classes = [IsAdminUser]
 
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAdminUser])
 def CategoryDelateAPIView(request):
     tab = request.GET.getlist('option')
     for i in tab:
@@ -215,6 +234,7 @@ def CategoryDelateAPIView(request):
 
 class CommentCreateAPIView(CreateAPIView):
     serializer_class = CommentModelSerializer
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         user = ProfileModel.objects.get(user=request.user)
@@ -232,3 +252,20 @@ class CommmentListAPIView(ListAPIView):
         return CommentModel.objects.filter(book=book)
 
 
+class AdmCommentListSerializer(ListAPIView):
+    serializer_class = AdminCommentListSerializer
+
+    def get_queryset(self):
+        return AdminCommentModel.objects.filter(com_id=self.kwargs.get('pk'))
+
+
+class AdminCommentCreateAPIView(CreateAPIView):
+    serializer_class = ReplyCreateSerializer
+    permission_classes = [IsAdminUser]
+
+    def create(self, request, *args, **kwargs):
+        text = self.request.POST.get('text')
+        com = CommentModel.objects.get(id=self.kwargs.get('pk'))
+        user = UserModel.objects.get(username=request.user)
+        AdminCommentModel.objects.create(com=com, user=user, text=text)
+        return Response(status=status.HTTP_201_CREATED)

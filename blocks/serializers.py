@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from blocks.models import MainBannerModal, CollectionModel, Top100BookModel, MonthBookModel, NetworkModal
+from blocks.models import MainBannerModal, CollectionModel, Top100BookModel, MonthBookModel, NetworkModal, \
+    ApplicationsModel
 
 
 class MainBannerModalSerializer(serializers.ModelSerializer):
@@ -30,3 +31,9 @@ class NetworkModalSerializer(serializers.ModelSerializer):
     class Meta:
         model = NetworkModal
         exclude = ['created_at']
+
+
+class ApplicationsModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ApplicationsModel
+        fields = '__all__'
