@@ -157,3 +157,7 @@ REST_REGISTRATION = {
 }
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
+try:
+    from .settings_local import *
+except ImportError:
+    pass
