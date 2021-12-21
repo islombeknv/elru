@@ -13,12 +13,12 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 PAYCOM_SETTINGS = {
-    "KASSA_ID": "616fdc4be07835ed4c75794d",  # token
-    "SECRET_KEY": "F2v4yVFvMnrSaThob2XoHgoTI#ffcE6v%ukP",  # password
+    "KASSA_ID": config("PAYME_KASSA"),  # token
+    "SECRET_KEY": config("PAYME_SEC"),  # password
     "ACCOUNTS": {
-        "KEY": "Elru_2021"
+        "KEY": config("PAYME_ACC")
     },
-    "TOKEN": "616fdc4be07835ed4c75794d"
+    "TOKEN": config("PAYME_TOKEN")
 }
 
 INSTALLED_APPS = [
@@ -42,10 +42,10 @@ INSTALLED_APPS = [
 ]
 
 CLICK_SETTINGS = {
-    'service_id': '17730',
-    'merchant_id': '12850',
-    'secret_key': 'EbJy7zizjtfz',
-    'merchant_user_id': '19565'
+    'service_id': config("CLICK_SER"),
+    'merchant_id': config("CLICK_MER"),
+    'secret_key': config("CLICK_SEC"),
+    'merchant_user_id': config("CLICK_MER_USER")
 }
 
 MIDDLEWARE = [
