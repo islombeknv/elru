@@ -12,9 +12,9 @@ Django==3.2.8
 django-environ==0.8.1
 django-modeltranslation==0.17.3
 django-multiselectfield==0.1.12
-django-phone-login-fix-version==
+django-phone-login-fix-version
 django-rest-registration==0.6.4
-django-sendsms==
+django-sendsms
 djangorestframework==3.12.4
 djangorestframework-simplejwt==5.0.0
 fonttools==4.28.3
