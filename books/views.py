@@ -116,6 +116,17 @@ class BookListAPIView(ListAPIView):  # user uchun
     serializer_class = BookModelSerializer
     queryset = BookModel.objects.order_by('-pk')
 
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+        qs = BookModel.objects.all()
+        if q:
+            qs = qs.filter(Q(title_uz__icontains=q) |
+                           Q(title_ru__icontains=q) |
+                           Q(title_en__icontains=q) |
+                           Q(author__name__icontains=q)
+                           )
+        return qs
+
 
 class AdminBookListAPIView(ListAPIView):
     serializer_class = BookModelSerializer

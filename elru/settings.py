@@ -1,10 +1,12 @@
 from datetime import datetime
 from pathlib import Path
+
+from decouple import config
 from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = ''
+SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = True
 
@@ -14,7 +16,7 @@ PAYCOM_SETTINGS = {
     "KASSA_ID": "616fdc4be07835ed4c75794d",  # token
     "SECRET_KEY": "F2v4yVFvMnrSaThob2XoHgoTI#ffcE6v%ukP",  # password
     "ACCOUNTS": {
-        "KEY": "TG9naW46UGFzcw"
+        "KEY": "Elru_2021"
     },
     "TOKEN": "616fdc4be07835ed4c75794d"
 }
@@ -80,8 +82,12 @@ WSGI_APPLICATION = 'elru.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASS'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
@@ -130,8 +136,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'mobzoomtv@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = config('EMAIL_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -142,11 +148,16 @@ REST_FRAMEWORK = {
 REST_REGISTRATION = {
     'REGISTER_VERIFICATION_ENABLED': True,
     'RESET_PASSWORD_VERIFICATION_ENABLED': True,
-    'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
-    'REGISTER_VERIFICATION_URL': 'http://127.0.0.1:8000/verify-user/',
+    'REGISTER_EMAIL_VERIFICATION_ENABLED': True,
+    'REGISTER_VERIFICATION_URL': 'https://elru.uz/verify-user/',
     'RESET_PASSWORD_VERIFICATION_URL': 'https://frontend-host/reset-password/',
     'REGISTER_EMAIL_VERIFICATION_URL': 'https://frontend-host/verify-email/',
 
-    'VERIFICATION_FROM_EMAIL': 'mobzoomtv@gmail.com',
+    'VERIFICATION_FROM_EMAIL': 'elru.profi@gmail.com',
 }
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+try:
+    from .settings_local import *
+except ImportError:
+    pass
