@@ -7,15 +7,14 @@ from payments.views import TestView
 from clickuz import ClickUz
 from paycomuz import Paycom
 
-# paycom = Paycom()
-# url = paycom.create_initialization(amount=5.00, order_id='197', return_url='https://example.com/success/')
-# print(url)
+paycom = Paycom()
+url = paycom.create_initialization(amount=5.00, order_id='197', return_url='https://example.com/success/')
+print(url)
 # url = ClickUz.generate_url(order_id='1', amount='15000000')
 # print(url)
 
 urlpatterns = [
-    path('paycom/', TestView.as_view()),
-
+    path('paycom/', TestView.as_view())
 ]
 
 urlpatterns += i18n_patterns(

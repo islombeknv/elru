@@ -22,6 +22,8 @@ PAYCOM_SETTINGS = {
 }
 
 INSTALLED_APPS = [
+    'rest_framework',
+    'paycomuz',
     'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,8 +31,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'paycomuz',
     'clickuz',
     'rest_registration',
     'payments',
