@@ -13,12 +13,12 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 PAYCOM_SETTINGS = {
-    "KASSA_ID": config("PAYME_KASSA"),  # token
-    "SECRET_KEY": config("PAYME_SEC"),  # password
+    "KASSA_ID": "616fdc4be07835ed4c75794d",  # token
+    "SECRET_KEY": "F2v4yVFvMnrSaThob2XoHgoTI#ffcE6v%ukP",  # password
     "ACCOUNTS": {
         "KEY": "order_id"
     },
-    "TOKEN": config("PAYME_TOKEN")
+    "TOKEN": "616fdc4be07835ed4c75794d"
 }
 
 INSTALLED_APPS = [
