@@ -16,9 +16,9 @@ from paycomuz import Paycom
 
 urlpatterns = i18n_patterns(
     path('click/transaction/', ClickView.as_view()),
-    path('', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('accounts/', include('rest_registration.api.urls')),
-    path('book/', include('books.urls')),
+    path('', include('books.urls')),
     path('news/', include('blog.urls')),
     path('user/', include('accounts.urls')),
     path('blocks/', include('blocks.urls')),
