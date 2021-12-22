@@ -13,9 +13,12 @@ from paycomuz import Paycom
 # url = ClickUz.generate_url(order_id='1', amount='15000000')
 # print(url)
 
-
-urlpatterns = i18n_patterns(
+urlpatterns = [
     path('paycom/', TestView.as_view()),
+
+]
+
+urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('accounts/', include('rest_registration.api.urls')),
