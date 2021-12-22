@@ -1,3 +1,4 @@
+from clickuz import ClickUz
 from django.http import HttpResponseNotFound
 from paycomuz import Paycom
 from rest_framework import status
@@ -45,8 +46,9 @@ class OrderCreateView(CreateAPIView):
                                           city_district=city_district, address=address,
                                           full_name=full_name, note=note, phone=phone, price=price)
 
-        paycom = Paycom()
-        url = paycom.create_initialization(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
+        # paycom = Paycom()
+        # url = paycom.create_initialization(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
+        url = ClickUz.generate_url(order_id=order.price, amount=order.order_id, return_url='http://example.com')
         return Response(url, status=status.HTTP_201_CREATED)
 
 

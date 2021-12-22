@@ -22,10 +22,21 @@ class CheckOrder(Paycom):
                 return self.ORDER_NOT_FOND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
-        print(account)
+        try:
+            ord = OrderModel.objects.get(order_id=transaction.order_key)
+        except ord.DoesNotExist:
+            ord = None
+        ord.status = 'Kutilmoqda'
+        ord.save()
 
     def cancel_payment(self, account, transaction, *args, **kwargs):
-        print(account)
+
+        try:
+            ord = OrderModel.objects.get(order_id=transaction.order_key)
+        except ord.DoesNotExist:
+            ord = None
+        ord.status = 'Kutilmoqda'
+        ord.save()
 
 
 class TestView(MerchantAPIView):
