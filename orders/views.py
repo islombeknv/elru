@@ -1,4 +1,5 @@
 from django.http import HttpResponseNotFound
+from paycomuz import Paycom
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -40,10 +41,13 @@ class OrderCreateView(CreateAPIView):
         full_name = self.request.POST.get('full_name')
         note = self.request.POST.get('note')
         phone = self.request.POST.get('phone')
-        OrderModel.objects.create(user=user, book=book, territory=territory,
-                                  city_district=city_district, address=address,
-                                  full_name=full_name, note=note, phone=phone, price=price)
-        return Response(status=status.HTTP_201_CREATED)
+        order = OrderModel.objects.create(user=user, book=book, territory=territory,
+                                          city_district=city_district, address=address,
+                                          full_name=full_name, note=note, phone=phone, price=price)
+
+        paycom = Paycom()
+        url = paycom.create_initialization(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
+        return Response(url, status=status.HTTP_201_CREATED)
 
 
 class OrderListView(ListAPIView):

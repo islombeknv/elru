@@ -16,7 +16,7 @@ PAYCOM_SETTINGS = {
     "KASSA_ID": config("PAYME_KASSA"),  # token
     "SECRET_KEY": config("PAYME_SEC"),  # password
     "ACCOUNTS": {
-        "KEY": config("PAYME_ACC")
+        "KEY": "order_id"
     },
     "TOKEN": config("PAYME_TOKEN")
 }
