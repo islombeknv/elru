@@ -21,6 +21,12 @@ class CheckOrder(Paycom):
             else:
                 return self.ORDER_NOT_FOND
 
+    def successfully_payment(self, account, transaction, *args, **kwargs):
+        print(account)
+
+    def cancel_payment(self, account, transaction, *args, **kwargs):
+        print(account)
+
 
 class TestView(MerchantAPIView):
     VALIDATE_CLASS = CheckOrder
