@@ -13,7 +13,7 @@ STATUS = (
 
 
 def create_new_ref_number():
-    return str(random.randint(100000, 999999))
+    return str(f'#{random.randint(10000, 99999)}')
 
 
 class OrderModel(models.Model):
