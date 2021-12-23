@@ -3,18 +3,11 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from payments.views import TestView
-from clickuz import ClickUz
-from paycomuz import Paycom
-
-paycom = Paycom()
-url = paycom.create_initialization(amount=500.00, order_id='277539', return_url='https://example.com/success/')
-print(url)
-# url = ClickUz.generate_url(order_id='1', amount='15000000')
-# print(url)
+from payments.views import TestView, ClickView
 
 urlpatterns = [
-    path('paycom/', TestView.as_view())
+    path('paycom/', TestView.as_view()),
+    path('click/transaction/', ClickView.as_view())
 ]
 
 urlpatterns += i18n_patterns(
@@ -30,3 +23,12 @@ urlpatterns += i18n_patterns(
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# from clickuz import ClickUz
+# from paycomuz import Paycom
+#
+# paycom = Paycom()
+# url = paycom.create_initialization(amount=500.00, order_id='277539', return_url='https://example.com/success/')
+# print(url)
+# # url = ClickUz.generate_url(order_id='1', amount='15000000')
+# # print(url)
