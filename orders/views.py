@@ -48,7 +48,7 @@ class OrderCreateView(CreateAPIView):
 
         # paycom = Paycom()
         # url = paycom.create_initialization(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
-        url = ClickUz.generate_url(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
+        url = ClickUz.generate_url(amount=order.price, order_id=5, return_url='https://elru.cf')
         return Response(url, status=status.HTTP_201_CREATED)
 
 

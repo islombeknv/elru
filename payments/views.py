@@ -49,14 +49,14 @@ class TestView(MerchantAPIView):
 class CheckOrderAndPayment(ClickUz):
 
     def check_order(self, order_id: str, amount: str):
-        if order_id == '1' and amount == '500':
+        if order_id == '5' and amount == '500':
             return self.ORDER_FOUND
-        if order_id == '1' and amount != '500':
+        if order_id == '5' and amount != '500':
             return self.INVALID_AMOUNT
         return self.ORDER_NOT_FOUND
 
     def successfully_payment(self, order_id: str, transaction: object):
-        if order_id != '1':
+        if order_id != '5':
             raise ValueError
 
 
