@@ -118,6 +118,11 @@ class BookListAPIView(ListAPIView):  # user uchun
 
     def get_queryset(self):
         q = self.request.GET.get('q')
+        aut = self.request.GET.get('aut')
+        cat = self.request.GET.get('cat')
+        num = self.request.GET.get('num')
+        form = self.request.GET.get('form')
+        tip = self.request.GET.get('tip')
         qs = BookModel.objects.all()
         if q:
             qs = qs.filter(Q(title_uz__icontains=q) |
@@ -125,6 +130,16 @@ class BookListAPIView(ListAPIView):  # user uchun
                            Q(title_en__icontains=q) |
                            Q(author__name__icontains=q)
                            )
+        if aut:
+            qs = qs.filter(author__name__icontains=aut)
+        if cat:
+            qs = qs.filter(category__title__icontains=cat)
+        if num:
+            qs = qs.filter(print_length=num)
+        if form:
+            qs = qs.filter(form__icontains=form)
+        if tip:
+            qs = qs.filter(tip__icontains=tip)
         return qs
 
 
