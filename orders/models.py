@@ -5,10 +5,10 @@ import random
 UserModel = get_user_model()
 
 STATUS = (
-    ('1', 'Kutilmoqda'),
-    ('2', 'Tasdiqlandi'),
-    ('3', 'Yo`lda'),
-    ('4', 'Buyurtma yetkazildi'),
+    ('Kutilmoqda', 'Kutilmoqda'),
+    ('Tasdiqlandi', 'Tasdiqlandi'),
+    ('Yuborildi', 'Yuborildi'),
+    ('Yetkazildi', 'Yetkazildi'),
 )
 
 PAYMENT = (
@@ -35,7 +35,7 @@ class OrderModel(models.Model):
     phone = models.CharField(max_length=30)
     price = models.FloatField()
     status = models.CharField(max_length=100, choices=STATUS, null=True, blank=True,
-                              default='Tasdiqlash jarayonida')
+                              default='Kutilmoqda')
     pay = models.CharField(max_length=50, choices=PAYMENT, default="progress")
     created_at = models.DateTimeField(auto_now_add=True)
 
