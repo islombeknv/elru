@@ -11,6 +11,12 @@ STATUS = (
     ('4', 'Buyurtma yetkazildi'),
 )
 
+PAYMENT = (
+    ('progress', 'progress'),
+    ('click', 'click'),
+    ('payme', 'payme'),
+)
+
 
 def create_new_ref_number():
     return str(random.randint(10000, 99999))
@@ -30,7 +36,7 @@ class OrderModel(models.Model):
     price = models.FloatField()
     status = models.CharField(max_length=100, choices=STATUS, null=True, blank=True,
                               default='Tasdiqlash jarayonida')
-
+    pay = models.CharField(max_length=50, choices=PAYMENT, default="progress")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

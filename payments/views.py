@@ -3,6 +3,8 @@ from paycomuz import Paycom
 from clickuz.views import ClickUzMerchantAPIView
 from clickuz import ClickUz
 
+from orders.models import OrderModel
+
 
 class CheckOrder(Paycom):
     def check_order(self, amount, account, *args, **kwargs):
@@ -23,10 +25,23 @@ class TestView(MerchantAPIView):
 class CheckOrderAndPayment(ClickUz):
 
     def check_order(self, order_id: str, amount: str):
-        return self.ORDER_FOUND
+        try:
+            order = OrderModel.objects.get(order_id=order_id)
+        except order.DoesNotExist:
+            order = None
+        if order.order_id == order_id and order.price == amount:
+            return self.ORDER_FOUND
+        if order.order_id == order_id and order.price != amount:
+            return self.INVALID_AMOUNT
+        return self.ORDER_NOT_FOUND
 
     def successfully_payment(self, order_id: str, transaction: object):
-        print(order_id)
+        try:
+            order = OrderModel.objects.get(order_id=order_id)
+        except order.DoesNotExist:
+            order = None
+        order.pay = 'click'
+        order.save()
 
 
 class ClickView(ClickUzMerchantAPIView):
