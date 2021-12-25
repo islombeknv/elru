@@ -18,7 +18,7 @@ class OrderAudioBookModel(serializers.ModelSerializer):
 class OrderModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderModel
-        exclude = ['created_at', 'user', 'price', 'status', 'order_id']
+        exclude = ['created_at', 'user', 'price', 'status', 'order_id', 'pay']
 
 
 class OrderListSerializer(serializers.ModelSerializer):
