@@ -9,20 +9,7 @@ from orders.models import OrderModel
 class CheckOrder(Paycom):
     class CheckOrder(Paycom):
         def check_order(self, amount, account, *args, **kwargs):
-            try:
-                ord = OrderModel.objects.get(pk=account['order_id'])
-            except ord.DoesNotExist:
-                ord = None
-            if not (ord):
-                return self.ORDER_NOT_FOND
-            else:
-                if ord.status == 'Kutilmoqda':
-                    if ord.price == amount:
-                        return self.ORDER_FOUND
-                    else:
-                        return self.INVALID_AMOUNT
-                else:
-                    return self.ORDER_NOT_FOND
+            return self.ORDER_FOUND
 
         def successfully_payment(self, account, transaction, *args, **kwargs):
             print(account)
