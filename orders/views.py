@@ -1,5 +1,5 @@
 from clickuz import ClickUz
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponse
 from paycomuz import Paycom
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, RetrieveUpdateAPIView
@@ -50,7 +50,7 @@ class OrderCreateView(CreateAPIView):
         paycom = Paycom()
         pay['payme'] = paycom.create_initialization(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
         pay['click'] = ClickUz.generate_url(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
-        return Response(json.loads(pay), status=status.HTTP_201_CREATED)
+        return HttpResponse(json.dumps(pay), content_type="application/json")
 
 
 class OrderListView(ListAPIView):
