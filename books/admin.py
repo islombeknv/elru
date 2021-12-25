@@ -19,7 +19,7 @@ class MyTranslationAdmin(TranslationAdmin):
 
 @admin.register(BookModel)
 class BookModelAdmin(MyTranslationAdmin):
-    list_display = ['title', 'author', 'category', 'created_at']
+    list_display = ['title', 'author', 'category', 'created_at', 'form']
     list_filter = ['title', 'category', 'author', 'created_at']
     search_fields = ['languages', 'publisher', 'author', 'category']
     readonly_fields = ['paper_dic_price', 'audio_dic_price', 'pdf_dic_price', ]
@@ -27,24 +27,42 @@ class BookModelAdmin(MyTranslationAdmin):
 
 
 @admin.register(CategoryModel)
-class CategoryModelAdmin(admin.ModelAdmin):
+class CategoryModelAdmin(TranslationAdmin):
     search_fields = ['title']
+    list_display = ['title', 'created_at', 'updated_at']
+    list_filter = ['created_at']
 
 
 @admin.register(AuthorModal)
 class AuthorModalAdmin(admin.ModelAdmin):
     search_fields = ['name']
+    list_display = ['name', 'created_at', 'updated_at']
+    list_filter = ['created_at']
 
 
 @admin.register(PublisherModel)
 class PublisherModelAdmin(admin.ModelAdmin):
     search_fields = ['title']
+    list_display = ['title', 'created_at', 'updated_at']
+    list_filter = ['created_at']
 
 
 @admin.register(LanguageModel)
 class PublisherModelAdmin(admin.ModelAdmin):
     search_fields = ['title']
+    list_display = ['title', 'created_at', 'updated_at']
+    list_filter = ['created_at']
 
 
-admin.site.register(CommentModel)
-admin.site.register(AdminCommentModel)
+@admin.register(CommentModel)
+class CommentModelAdmin(admin.ModelAdmin):
+    search_fields = ['book', 'user']
+    list_display = ['book', 'user', 'updated_at']
+    list_filter = ['created_at']
+
+
+@admin.register(AdminCommentModel)
+class CommentModelAdmin(admin.ModelAdmin):
+    search_fields = ['com', 'user']
+    list_display = ['text', 'user', 'created_at']
+    list_filter = ['created_at']
