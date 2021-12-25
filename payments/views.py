@@ -7,15 +7,14 @@ from orders.models import OrderModel
 
 
 class CheckOrder(Paycom):
-    class CheckOrder(Paycom):
-        def check_order(self, amount, account, *args, **kwargs):
-            return self.ORDER_FOUND
+    def check_order(self, amount, account, *args, **kwargs):
+        return self.ORDER_FOUND
 
-        def successfully_payment(self, account, transaction, *args, **kwargs):
-            print(account)
+    def successfully_payment(self, account, transaction, *args, **kwargs):
+        print(account)
 
-        def cancel_payment(self, account, transaction, *args, **kwargs):
-            print(account)
+    def cancel_payment(self, account, transaction, *args, **kwargs):
+        print(account)
 
 
 class TestView(MerchantAPIView):
@@ -30,9 +29,10 @@ class CheckOrderAndPayment(ClickUz):
             order = OrderModel.objects.get(order_id=order_id)
         except order.DoesNotExist:
             order = None
-        if order.order_id == order_id and order.price == float(amount):
+        if order.order_id == order_id and order.price == amount:
+            print(order.order_id, order_id, order.price, amount)
             return self.ORDER_FOUND
-        elif order.order_id == order_id and order.price != float(amount):
+        if order.order_id == order_id and order.price != amount:
             return self.INVALID_AMOUNT
         return self.ORDER_NOT_FOUND
 
@@ -41,8 +41,7 @@ class CheckOrderAndPayment(ClickUz):
             order = OrderModel.objects.get(order_id=order_id)
         except order.DoesNotExist:
             order = None
-        order.pay = 'click'
-        order.save()
+        order.pay = 'cli'
 
 
 class ClickView(ClickUzMerchantAPIView):
