@@ -13,12 +13,12 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 PAYCOM_SETTINGS = {
-    "KASSA_ID": config("PAYME_KASSA"),  # token
-    "SECRET_KEY": config("PAYME_SEC"),  # password
+    "KASSA_ID": "616fdc4be07835ed4c75794d",  # token
+    "SECRET_KEY": "F2v4yVFvMnrSaThob2XoHgoTI#ffcE6v%ukP",  # password
     "ACCOUNTS": {
-        "KEY": "order_id"
+        "KEY": "user_id"
     },
-    "TOKEN": config("PAYME_TOKEN")
+    "TOKEN": "616fdc4be07835ed4c75794d"
 }
 
 INSTALLED_APPS = [
@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
+    'corsheaders',
     'clickuz',
     'rest_registration',
     'payments',
@@ -52,6 +54,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -140,6 +143,9 @@ EMAIL_HOST_USER = config('EMAIL_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
     ]
@@ -161,3 +167,6 @@ try:
     from .settings_local import *
 except ImportError:
     pass
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = False

@@ -9,12 +9,14 @@ colorama==0.4.4
 cycler==0.11.0
 decorator==5.1.0
 Django==3.2.8
+django-cors-headers==3.10.1
 django-environ==0.8.1
 django-modeltranslation==0.17.3
 django-multiselectfield==0.1.12
-django-phone-login-fix-version
+django-phone-login-fix-version==0.0.9
+django-phonenumber-field==5.0.0
 django-rest-registration==0.6.4
-django-sendsms
+django-sendsms==0.3.1
 djangorestframework==3.12.4
 djangorestframework-simplejwt==5.0.0
 fonttools==4.28.3
@@ -33,7 +35,6 @@ patsy==0.5.2
 PaycomUz==3.0
 phonenumberslite==8.12.39
 Pillow==8.4.0
-pip==21.3.1
 PyJWT==2.3.0
 pyparsing==3.0.6
 python-dateutil==2.8.2
@@ -44,7 +45,6 @@ scikit-learn==1.0.1
 scipy==1.7.3
 seaborn==0.11.2
 self==2020.12.3
-setuptools==58.2.0
 simplejson==3.17.6
 six==1.16.0
 sklearn==0.0
@@ -52,5 +52,6 @@ sqlparse==0.4.2
 statsmodels==0.12.2
 threadpoolctl==3.0.0
 tqdm==4.62.3
+tzdata==2021.5
 urllib3==1.26.7
 username==2.1.0
