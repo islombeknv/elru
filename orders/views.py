@@ -49,7 +49,7 @@ class OrderCreateView(CreateAPIView):
         paycom = Paycom()
         payme = paycom.create_initialization(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
         click = ClickUz.generate_url(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
-        return Response({click: click, payme: payme}, status=status.HTTP_201_CREATED)
+        return Response({f"{click}: '{click}', '{payme}': '{payme}'"}, status=status.HTTP_201_CREATED)
 
 
 class OrderListView(ListAPIView):
@@ -59,7 +59,6 @@ class OrderListView(ListAPIView):
     def get_queryset(self):
         order_id = self.request.GET.get('q')
         status = self.request.GET.get('status')
-        print(status)
         from_date = self.request.GET.get('from_date')
         to_date = self.request.GET.get('to_date')
         if order_id:
