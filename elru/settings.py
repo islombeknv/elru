@@ -16,7 +16,7 @@ PAYCOM_SETTINGS = {
     "KASSA_ID": "616fdc4be07835ed4c75794d",  # token
     "SECRET_KEY": "F2v4yVFvMnrSaThob2XoHgoTI#ffcE6v%ukP",  # password
     "ACCOUNTS": {
-        "KEY": "user_id"
+        "KEY": "order_id"
     },
     "TOKEN": "616fdc4be07835ed4c75794d"
 }
@@ -143,8 +143,9 @@ EMAIL_HOST_USER = config('EMAIL_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny'
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ]
 }
 
@@ -165,5 +166,9 @@ try:
 except ImportError:
     pass
 
+CORS_ALLOW_METHODS = ["*"]
+
+CORS_ALLOW_HEADERS = ["*"]
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = False

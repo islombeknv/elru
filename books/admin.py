@@ -57,12 +57,12 @@ class PublisherModelAdmin(admin.ModelAdmin):
 @admin.register(CommentModel)
 class CommentModelAdmin(admin.ModelAdmin):
     search_fields = ['book', 'user']
-    list_display = ['book', 'user', 'updated_at']
+    list_display = ['book', 'user', 'created_at']
     list_filter = ['created_at']
 
 
 @admin.register(AdminCommentModel)
-class CommentModelAdmin(admin.ModelAdmin):
+class AdminCommentModelAdmin(admin.ModelAdmin):
     search_fields = ['com', 'user']
     list_display = ['text', 'user', 'created_at']
     list_filter = ['created_at']
