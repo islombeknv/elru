@@ -29,9 +29,9 @@ class CheckOrderAndPayment(ClickUz):
             order = OrderModel.objects.get(order_id=order_id)
         except order.DoesNotExist:
             order = None
-        if order.order_id == order_id and order.price == amount:
+        if order.order_id == order_id and order.price == float(amount):
             return self.ORDER_FOUND
-        if order.order_id == order_id and order.price != amount:
+        elif order.order_id == order_id and order.price != float(amount):
             return self.INVALID_AMOUNT
         return self.ORDER_NOT_FOUND
 
