@@ -25,10 +25,18 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 from clickuz import ClickUz
+
 url = ClickUz.generate_url(order_id='1', amount='100', return_url='https://elru.cf')
 print(url)
 
 from paycomuz import Paycom
+
 paycom = Paycom()
 url = paycom.create_initialization(amount=100.01, order_id='35', return_url='https://example.com/success/')
 print(url)
+
+
+def create_pay_me_url_via_order(order_id) -> str:
+    payme = Paycom()
+    url = payme.create_initialization(amount=1000, order_id=str(1), return_url='https://tutto.uz/')
+    print(url)

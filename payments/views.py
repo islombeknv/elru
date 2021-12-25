@@ -9,11 +9,7 @@ from orders.models import OrderModel
 class CheckOrder(Paycom):
     class CheckOrder(Paycom):
         def check_order(self, amount, account, *args, **kwargs):
-            if 35 == account['order_id'] and 100.01 == amount:
-                return self.ORDER_FOUND
-            elif 35 == account['order_id'] and 100.01 != amount:
-                return self.INVALID_AMOUNT
-            return self.ORDER_NOT_FOND
+            return self.ORDER_FOUND
 
         def successfully_payment(self, account, transaction, *args, **kwargs):
             print(account)
