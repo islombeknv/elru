@@ -144,8 +144,8 @@ EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        "django_cognito_jwt.JSONWebTokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ]
 }
 
