@@ -19,6 +19,7 @@ urlpatterns = [
     path('author/delate/', AuthorDelateAPIView),
 
     path('books/', AdminBookListAPIView.as_view()),
+    path('user/books/', BookListAPIView.as_view()),
     path('books/<int:pk>/', BookRetrieveAPIView.as_view()),
     path('books/releted/<int:pk>/', BookRelatedListView.as_view()),
     path('books/create/', BookCreateAPIView.as_view()),
