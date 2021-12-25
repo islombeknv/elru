@@ -50,7 +50,7 @@ class OrderCreateView(CreateAPIView):
         paycom = Paycom()
         pay['payme'] = paycom.create_initialization(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
         pay['click'] = ClickUz.generate_url(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
-        return Response(json.dumps(pay), status=status.HTTP_201_CREATED)
+        return Response(json.loads(pay), status=status.HTTP_201_CREATED)
 
 
 class OrderListView(ListAPIView):
