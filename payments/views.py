@@ -8,6 +8,7 @@ from orders.models import OrderModel
 
 class CheckOrder(Paycom):
     def check_order(self, amount, account, *args, **kwargs):
+        amount = amount / 100
         order_id = account['order']
         try:
             order = OrderModel.objects.get(id=order_id)
