@@ -18,7 +18,7 @@ class CheckOrder(Paycom):
                 return self.INVALID_AMOUNT
             else:
                 return self.ORDER_NOT_FOND
-        except order.DoesNotExist:
+        except:
             return self.ORDER_NOT_FOND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
