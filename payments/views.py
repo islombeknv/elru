@@ -12,6 +12,8 @@ class CheckOrder(Paycom):
             order = OrderModel.objects.get(order_id=account['order'])
             if order.price != amount:
                 return status.INVALID_AMOUNT
+            if not order or order.order_id != account['order']:
+                return status.ORDER_NOT_FOND
             return status.ORDER_FOUND
         except order.DoesNotExist:
             return status.ORDER_NOT_FOND
