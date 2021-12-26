@@ -5,13 +5,13 @@ from payment_system import status
 
 
 class CheckOrder(Paycom):
-    def check_order(self, amount, account):
+    def check_order(self, amount, account, *args, **kwargs):
         try:
             order = OrderModel.objects.get(order_id=account['order'])
             if order.price != amount:
                 return status.INVALID_AMOUNT
             return status.ORDER_FOUND
-        except order.DoesNotExist:
+        except:
             return status.ORDER_NOT_FOND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
