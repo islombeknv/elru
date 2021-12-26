@@ -13,12 +13,12 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 PAYCOM_SETTINGS = {
-    "KASSA_ID": "616fdc4be07835ed4c75794d",  # token
-    "SECRET_KEY": "F2v4yVFvMnrSaThob2XoHgoTI#ffcE6v%ukP",  # password
+    "KASSA_ID": config("PAYME_KASSA"),  # token
+    "SECRET_KEY": config("PAYME_SEC"),  # password
     "ACCOUNTS": {
         "KEY": "order"
     },
-    "TOKEN": "616fdc4be07835ed4c75794d"
+    "TOKEN": config("PAYME_TOKEN")
 }
 
 INSTALLED_APPS = [
@@ -31,10 +31,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework.authtoken',
     'corsheaders',
     'clickuz',
     'rest_registration',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'payments',
     'accounts',
     'books',
@@ -145,8 +146,10 @@ EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication'
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 }
 

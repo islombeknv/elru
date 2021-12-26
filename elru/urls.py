@@ -4,10 +4,18 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from payments.views import TestView, ClickView
+from rest_framework.authtoken import views
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
     path('paycom/', TestView.as_view()),
-    path('click/transaction/', ClickView.as_view())
+    path('click/transaction/', ClickView.as_view()),
+    path('api-token-auth/', views.obtain_auth_token),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
 urlpatterns += i18n_patterns(
@@ -23,12 +31,3 @@ urlpatterns += i18n_patterns(
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-from clickuz import ClickUz
-url = ClickUz.generate_url(order_id='1', amount='100', return_url='https://elru.cf')
-print(url)
-
-from paycomuz import Paycom
-paycom = Paycom()
-url = paycom.create_initialization(amount=100, order_id='197', return_url='https://example.com/success/')
-print(url)
