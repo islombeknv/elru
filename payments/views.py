@@ -2,23 +2,20 @@ from paycomuz.views import MerchantAPIView
 from paycomuz import Paycom
 from clickuz.views import ClickUzMerchantAPIView
 from clickuz import ClickUz
-
+from payments import status
 from orders.models import OrderModel
 
 
 class CheckOrder(Paycom):
     def check_order(self, amount, account, *args, **kwargs):
+        order_id = account['order']
         try:
-            order = OrderModel.objects.get(order_id=account['order'])
+            order = OrderModel.objects.get(id=order_id)
+            if int(order.price) != int(amount):
+                return status.INVALID_AMOUNT
+            return status.ORDER_FOUND
         except order.DoesNotExist:
-            order = None
-        if order.order_id != account['order'] and order.price != amount:
-            return self.ORDER_NOT_FOND
-        if order.order_id == account['order'] and order.price == amount:
-            return self.ORDER_FOUND
-        if order.order_id == account['order'] and order.price != amount:
-            return self.INVALID_AMOUNT
-        return self.ORDER_NOT_FOND
+            return status.ORDER_NOT_FOND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
         print(account)
