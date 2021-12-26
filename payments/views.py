@@ -12,7 +12,7 @@ class CheckOrder(Paycom):
             ord = OrderModel.objects.get(order_id=account['order'])
         except ord.DoesNotExist:
             ord = None
-        if not (ord):
+        if not ord:
             return self.ORDER_NOT_FOND
         else:
             if ord.pay == 'progress':
