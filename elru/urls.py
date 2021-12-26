@@ -3,10 +3,12 @@ from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+
+from payment_system.payme import PayMeView
 from payments.views import TestView, ClickView
 
 urlpatterns = [
-    path('paycom/', TestView.as_view()),
+    path('paycom/', PayMeView.as_view()),
     path('click/transaction/', ClickView.as_view())
 ]
 

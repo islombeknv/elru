@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'orders',
     'blog',
     'blocks',
+    'payment_system',
 ]
 
 CLICK_SETTINGS = {
