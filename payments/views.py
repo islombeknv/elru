@@ -48,7 +48,8 @@ class CheckOrderAndPayment(ClickUz):
 
     def successfully_payment(self, order_id: str, transaction: object):
         order = OrderModel.objects.get(order_id=order_id)
-        order.pay = 'cli'
+        order.pay = 'click'
+        order.save()
 
 
 class ClickView(ClickUzMerchantAPIView):
