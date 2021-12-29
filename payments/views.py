@@ -36,15 +36,7 @@ class TestView(MerchantAPIView):
 class CheckOrderAndPayment(ClickUz):
 
     def check_order(self, order_id: str, amount: str):
-        try:
-            order = OrderModel.objects.get(order_id=order_id)
-        except order.DoesNotExist:
-            order = None
-        if order.order_id == order_id and order.price == amount:
-            return self.ORDER_FOUND
-        if order.order_id == order_id and order.price != amount:
-            return self.INVALID_AMOUNT
-        return self.ORDER_NOT_FOUND
+        return self.ORDER_FOUND
 
     def successfully_payment(self, order_id: str, transaction: object):
         try:
