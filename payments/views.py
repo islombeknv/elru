@@ -38,13 +38,20 @@ class CheckOrderAndPayment(ClickUz):
     def check_order(self, order_id: str, amount: str):
         try:
             order = OrderModel.objects.get(order_id=order_id)
-            if order.order_id == order_id and order.price == amount:
-                return self.ORDER_FOUND
-            if order.order_id == order_id and order.price != amount:
-                return self.INVALID_AMOUNT
-            return self.ORDER_NOT_FOUND
-        except:
-            return self.ORDER_NOT_FOUND
+        except order.DoesNotExist:
+            order = None
+        if order.order_id == order_id and order.price == amount:
+            return self.ORDER_FOUND
+        if order.order_id == order_id and order.price != amount:
+            return self.INVALID_AMOUNT
+        return self.ORDER_NOT_FOUND
+
+    def successfully_payment(self, order_id: str, transaction: object):
+        try:
+            order = OrderModel.objects.get(order_id=order_id)
+        except order.DoesNotExist:
+            order = None
+        order.pay = 'cli'
 
 
 class ClickView(ClickUzMerchantAPIView):
