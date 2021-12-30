@@ -12,11 +12,12 @@ class CheckOrder(Paycom):
             order = OrderModel.objects.get(order_id=account['order'])
             if order.order_id != account['order']:
                 return self.ORDER_NOT_FOND
-            elif order.order_id == account['order'] and order.price == amount:
+            elif order.order_id == account['order'] and order.price == float(amount):
                 return self.ORDER_FOUND
-            elif order.order_id == account['order'] and order.price != amount:
+            elif order.order_id == account['order'] and order.price != float(amount):
                 return self.INVALID_AMOUNT
             else:
+
                 return self.ORDER_NOT_FOND
         except:
             return self.ORDER_NOT_FOND
