@@ -14,7 +14,7 @@ ALLOWED_HOSTS = ["*"]
 
 PAYCOM_SETTINGS = {
     "KASSA_ID": "616fdc4be07835ed4c75794d",  # token
-    "SECRET_KEY": "DEDnNMh7Ph1NJNYuT92dH#%m2rujTXTJ8BFE",  # password
+    "SECRET_KEY": "F2v4yVFvMnrSaThob2XoHgoTI#ffcE6v%ukP",  # password
     "ACCOUNTS": {
         "KEY": "order"
     },
