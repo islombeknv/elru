@@ -1,3 +1,4 @@
+import many
 from rest_framework import serializers
 
 from accounts.serializers import UserProfile2Serializer
@@ -29,7 +30,7 @@ class CategoryModelSerializer(serializers.ModelSerializer):
 
 
 class BookModelSerializer(serializers.ModelSerializer):
-    category = CategoryModelSerializer()
+    category = CategoryModelSerializer(many=True)
     publisher = PublisherModelSerializer()
     author = AuthorModalSerializer()
     languages = LanguageModelSerializer(many=True)

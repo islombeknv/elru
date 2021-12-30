@@ -82,7 +82,7 @@ class BookModel(models.Model):
     languages = models.ManyToManyField(LanguageModel, blank=True)
     publisher = models.ForeignKey(PublisherModel, on_delete=models.SET_NULL, null=True, blank=True)
     author = models.ForeignKey(AuthorModal, on_delete=models.SET_NULL, null=True)
-    category = models.ForeignKey(CategoryModel, on_delete=models.PROTECT, blank=True)
+    category = models.ManyToManyField(CategoryModel, blank=True)
     form = MultiSelectField(choices=BFORMAT)
     tip = MultiSelectField(choices=TIP)
     paper_price = models.FloatField(default=0, null=True, blank=True)

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from blog.models import PostModel
+from blog.models import PostModel, Image
 
 
 @admin.register(PostModel)
@@ -8,3 +8,6 @@ class PostModelAdmin(admin.ModelAdmin):
     list_display = ['title', 'created_at']
     list_filter = ['created_at']
     search_fields = ['title']
+
+
+admin.site.register(Image)

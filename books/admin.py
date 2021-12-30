@@ -19,7 +19,7 @@ class MyTranslationAdmin(TranslationAdmin):
 
 @admin.register(BookModel)
 class BookModelAdmin(MyTranslationAdmin):
-    list_display = ['title', 'author', 'category', 'created_at', 'form']
+    list_display = ['title', 'author', 'created_at', 'form']
     list_filter = ['title', 'category', 'author', 'created_at']
     search_fields = ['languages', 'publisher', 'author', 'category']
     readonly_fields = ['paper_dic_price', 'audio_dic_price', 'pdf_dic_price', ]

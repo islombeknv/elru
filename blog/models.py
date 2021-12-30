@@ -16,3 +16,7 @@ class PostModel(models.Model):
     class Meta:
         verbose_name = 'post'
         verbose_name_plural = 'posts'
+
+
+class Image(models.Model):
+    image = models.ImageField(upload_to="image")

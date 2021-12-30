@@ -13,9 +13,9 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('paycom/', TestView.as_view()),
     path('click/transaction/', ClickView.as_view()),
-    path('api-token-auth/', views.obtain_auth_token),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('api-token-auth/', views.obtain_auth_token),
+    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
 urlpatterns += i18n_patterns(
