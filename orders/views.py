@@ -44,7 +44,7 @@ class OrderCreateView(CreateAPIView):
         phone = self.request.POST.get('phone')
         order = OrderModel.objects.create(user=user, book=book, territory=territory,
                                           city_district=city_district, address=address,
-                                          full_name=full_name, note=note, phone=phone, price=price)
+                                          full_name=full_name, note=note, phone=phone, price=format(price, '.2f'))
 
         pay = {}
         paycom = Paycom()
