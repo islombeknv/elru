@@ -8,7 +8,7 @@ from orders.models import OrderModel
 
 class CheckOrder(Paycom):
     def check_order(self, amount, account, *args, **kwargs):
-        return self.ORDER_NOT_FOND
+        return self.ORDER_FOUND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
         order_id = int(account)
