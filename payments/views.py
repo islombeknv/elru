@@ -23,7 +23,8 @@ class CheckOrder(Paycom):
             return self.ORDER_NOT_FOND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
-        order = OrderModel.objects.get(order_id=account['order'])
+        order_id = int(account)
+        order = OrderModel.objects.get(order_id=order_id)
         order.pay = 'payme'
         order.save()
 
