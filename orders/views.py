@@ -44,11 +44,11 @@ class OrderCreateView(CreateAPIView):
         phone = self.request.POST.get('phone')
         order = OrderModel.objects.create(user=user, book=book, territory=territory,
                                           city_district=city_district, address=address,
-                                          full_name=full_name, note=note, phone=phone, price=format(price, '.4f'))
+                                          full_name=full_name, note=note, phone=phone, price=price)
 
         pay = {}
         paycom = Paycom()
-        pay['payme'] = paycom.create_initialization(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
+        pay['payme'] = paycom.create_initialization(amount=order.price * 100, order_id=order.order_id, return_url='https://elru.cf')
         pay['click'] = ClickUz.generate_url(amount=order.price, order_id=order.order_id, return_url='https://elru.cf')
         return HttpResponse(json.dumps(pay), content_type="application/json")
 
