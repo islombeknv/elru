@@ -1,7 +1,6 @@
 from django.urls import path
 
-from blog.views import PostListAPIView, PostCreateAPIView, PostUpdateAPIView, \
-    PostDelateAPIView, PostRetrieveAPIView, ImageView
+from blog.views import PostListAPIView, PostCreateAPIView, PostUpdateAPIView, PostDelateAPIView, PostRetrieveAPIView
 
 app_name = 'news'
 
@@ -11,5 +10,4 @@ urlpatterns = [
     path('create/', PostCreateAPIView.as_view()),
     path('update/<int:pk>/', PostUpdateAPIView.as_view()),
     path('delete/<int:pk>/', PostDelateAPIView.as_view()),
-    path('image/', ImageView.as_view()),
 ]

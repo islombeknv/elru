@@ -2,9 +2,6 @@ from django.db import models
 
 
 class PostModel(models.Model):
-    image = models.ImageField(upload_to='image', null=True, blank=True)
-    image1 = models.ImageField(upload_to='image', null=True, blank=True)
-    image2 = models.ImageField(upload_to='image', null=True, blank=True)
     title = models.CharField(max_length=250)
     info = models.CharField(max_length=512)
     content = models.TextField()
@@ -17,6 +14,3 @@ class PostModel(models.Model):
         verbose_name = 'post'
         verbose_name_plural = 'posts'
 
-
-class Image(models.Model):
-    image = models.ImageField(upload_to="image")
