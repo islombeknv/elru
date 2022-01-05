@@ -9,14 +9,21 @@ from payment_system import status
 
 class CheckOrder(Paycom):
     def check_order(self, amount, account, *args, **kwargs):
-        return self.ORDER_FOUND
+        amount = amount / 100
+        order_id = account['order']
+        try:
+            order = OrderModel.objects.get(order_id=order_id)
+            if order.price != amount:
+                return status.INVALID_AMOUNT
+            return status.ORDER_FOUND
+        except OrderModel.DoesNotExist:
+            return status.ORDER_NOT_FOND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
-        print(account)
-        # order_id = int(account)
-        # order = OrderModel.objects.get(order_id=order_id)
-        # order.pay = 'payme'
-        # order.save()
+        order_id = int(account)
+        order = OrderModel.objects.get(order_id=order_id)
+        order.pay = 'payme'
+        order.save()
 
     def cancel_payment(self, account, transaction, *args, **kwargs):
         print(account)
