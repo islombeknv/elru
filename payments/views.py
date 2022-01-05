@@ -4,29 +4,27 @@ from clickuz.views import ClickUzMerchantAPIView
 from clickuz import ClickUz
 
 from orders.models import OrderModel
+from payment_system import status
 
 
 class CheckOrder(Paycom):
     def check_order(self, amount, account, *args, **kwargs):
+        amount = amount / 100
+        order_id = account['order']
         try:
-            order = OrderModel.objects.get(order_id=account['order'])
-            if order.order_id != account['order']:
-                return self.ORDER_NOT_FOND
-            elif order.order_id == account['order'] and order.price == amount / 100:
-                return self.ORDER_FOUND
-            elif order.order_id == account['order'] and order.price != amount / 100:
-                return self.INVALID_AMOUNT
-            else:
-
-                return self.ORDER_NOT_FOND
-        except:
-            return self.ORDER_NOT_FOND
+            order = OrderModel.objects.get(order_id=order_id)
+            if order.price != amount:
+                return status.INVALID_AMOUNT
+            return status.ORDER_FOUND
+        except order.DoesNotExist:
+            return status.ORDER_NOT_FOND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
-        order_id = int(account)
-        order = OrderModel.objects.get(order_id=order_id)
-        order.pay = 'payme'
-        order.save()
+        print(account)
+        # order_id = int(account)
+        # order = OrderModel.objects.get(order_id=order_id)
+        # order.pay = 'payme'
+        # order.save()
 
     def cancel_payment(self, account, transaction, *args, **kwargs):
         print(account)

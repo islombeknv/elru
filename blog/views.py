@@ -1,6 +1,7 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateAPIView, DestroyAPIView, RetrieveAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAdminUser
+
 from blog.models import PostModel
 from blog.serializers import PostModelSerializer
 
@@ -11,9 +12,8 @@ class PostListAPIView(ListAPIView):
 
 
 class PostCreateAPIView(CreateAPIView):
-    parser_classes = (MultiPartParser, FormParser,)
+    parser_classes = (MultiPartParser, FormParser)
     serializer_class = PostModelSerializer
-    queryset = PostModel.objects.all()
     permission_classes = [IsAdminUser]
 
 
@@ -32,5 +32,3 @@ class PostDelateAPIView(DestroyAPIView):
 class PostRetrieveAPIView(RetrieveAPIView):
     serializer_class = PostModelSerializer
     queryset = PostModel.objects.all()
-
-

@@ -1,6 +1,7 @@
 from django.urls import path
 
-from blog.views import PostListAPIView, PostCreateAPIView, PostUpdateAPIView, PostDelateAPIView, PostRetrieveAPIView
+from blog.views import PostListAPIView, PostCreateAPIView, \
+    PostUpdateAPIView, PostDelateAPIView, PostRetrieveAPIView
 
 app_name = 'news'
 

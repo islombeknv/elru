@@ -6,4 +6,5 @@ from blog.models import PostModel
 class PostModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostModel
-        exclude = ['title', 'info', 'content']
+        fields = ['title', 'info', 'content', 'image']
+
