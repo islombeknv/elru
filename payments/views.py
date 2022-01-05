@@ -16,7 +16,7 @@ class CheckOrder(Paycom):
             if order.price != amount:
                 return status.INVALID_AMOUNT
             return status.ORDER_FOUND
-        except OrderModel.DoesNotExist:
+        except OrderModel.objects.get(order_id=order_id).DoesNotExist:
             return status.ORDER_NOT_FOND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
