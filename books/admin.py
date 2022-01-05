@@ -17,15 +17,6 @@ class MyTranslationAdmin(TranslationAdmin):
         }
 
 
-@admin.register(BookModel)
-class BookModelAdmin(MyTranslationAdmin):
-    list_display = ['title', 'author', 'created_at', 'form']
-    list_filter = ['title', 'category', 'author', 'created_at']
-    search_fields = ['languages', 'publisher', 'author', 'category']
-    readonly_fields = ['paper_dic_price', 'audio_dic_price', 'pdf_dic_price', ]
-    autocomplete_fields = ["category", "author", "publisher", "languages"]
-
-
 @admin.register(CategoryModel)
 class CategoryModelAdmin(TranslationAdmin):
     search_fields = ['title']
@@ -66,3 +57,12 @@ class AdminCommentModelAdmin(admin.ModelAdmin):
     search_fields = ['com', 'user']
     list_display = ['text', 'user', 'created_at']
     list_filter = ['created_at']
+
+
+@admin.register(BookModel)
+class BookModelAdmin(MyTranslationAdmin):
+    list_display = ['title', 'author', 'created_at', 'form']
+    list_filter = ['title', 'category', 'author', 'created_at']
+    search_fields = ['languages', 'publisher', 'author', 'category']
+    readonly_fields = ['paper_dic_price', 'audio_dic_price', 'pdf_dic_price', ]
+    autocomplete_fields = ["category", "author", "publisher", "languages"]
