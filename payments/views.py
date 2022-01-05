@@ -8,7 +8,15 @@ from orders.models import OrderModel
 
 class CheckOrder(Paycom):
     def check_order(self, amount, account, *args, **kwargs):
-        return self.ORDER_FOUND
+        amount = amount / 100
+        order_id = account['order']
+        try:
+            order = OrderModel.objects.get(order_id=order_id)
+            if order.price != amount:
+                return self.INVALID_AMOUNT
+            return self.ORDER_FOUND
+        except OrderModel.DoesNotExist:
+            return self.ORDER_NOT_FOND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
         order = OrderModel.objects.get(order_id=transaction.order_key)
