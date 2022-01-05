@@ -62,7 +62,7 @@ class AdminCommentModelAdmin(admin.ModelAdmin):
 @admin.register(BookModel)
 class BookModelAdmin(MyTranslationAdmin):
     list_display = ['title', 'author', 'created_at', 'form']
-    list_filter = ['title', 'category', 'author', 'created_at']
+    list_filter = ['category', 'created_at']
     search_fields = ['title']
     readonly_fields = ['paper_dic_price', 'audio_dic_price', 'pdf_dic_price', ]
     autocomplete_fields = ["category", "author", "publisher", "languages"]
