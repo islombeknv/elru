@@ -12,10 +12,7 @@ class CheckOrder(Paycom):
         return self.ORDER_FOUND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
-        order_id = int(account)
-        order = OrderModel.objects.get(order_id=order_id)
-        order.pay = 'payme'
-        order.save()
+        pass
 
     def cancel_payment(self, account, transaction, *args, **kwargs):
         print(account)
