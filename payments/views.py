@@ -16,7 +16,9 @@ class CheckOrder(Paycom):
         order.save()
 
     def cancel_payment(self, account, transaction, *args, **kwargs):
-        print(account)
+        order = OrderModel.objects.get(order_id=transaction.order_key)
+        order.pay = 'cancelled'
+        order.save()
 
 
 class TestView(MerchantAPIView):

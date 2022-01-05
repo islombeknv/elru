@@ -12,9 +12,10 @@ STATUS = (
 )
 
 PAYMENT = (
-    ('progress', 'progress'),
+    ('processing', 'processing'),
     ('click', 'click'),
     ('payme', 'payme'),
+    ('cancelled', 'cancelled'),
 )
 
 
@@ -36,7 +37,7 @@ class OrderModel(models.Model):
     price = models.FloatField()
     status = models.CharField(max_length=100, choices=STATUS, null=True, blank=True,
                               default='Kutilmoqda')
-    pay = models.CharField(max_length=50, choices=PAYMENT, default="progress")
+    pay = models.CharField(max_length=50, choices=PAYMENT, default="processing")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
