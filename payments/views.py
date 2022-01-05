@@ -4,7 +4,6 @@ from clickuz.views import ClickUzMerchantAPIView
 from clickuz import ClickUz
 
 from orders.models import OrderModel
-from payment_system import status
 
 
 class CheckOrder(Paycom):
@@ -12,7 +11,9 @@ class CheckOrder(Paycom):
         return self.ORDER_FOUND
 
     def successfully_payment(self, account, transaction, *args, **kwargs):
-        pass
+        order = OrderModel.objects.get(order_id=transaction.order_key)
+        order.pay = 'payme'
+        order.save()
 
     def cancel_payment(self, account, transaction, *args, **kwargs):
         print(account)
