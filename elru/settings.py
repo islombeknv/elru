@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'clickuz',
     'rest_registration',
-    # 'rest_framework.authtoken',
+    'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'oauth2_provider',
     'social_django',
@@ -151,7 +151,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_PASS')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
