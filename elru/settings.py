@@ -34,11 +34,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'clickuz',
     'rest_registration',
-    'rest_framework.authtoken',
-    'rest_framework_simplejwt',
     'oauth2_provider',
     'social_django',
     'rest_framework_social_oauth2',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'payments',
     'accounts',
     'books',
@@ -200,4 +200,3 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
     'https://www.googleapis.com/auth/userinfo.email',
     'https://www.googleapis.com/auth/userinfo.profile',
 ]
-
