@@ -233,7 +233,7 @@ class CategoryRetrieveAPIViewAPIView(ListAPIView):
     def get_queryset(self):
         pk = self.kwargs.get('pk')
         if pk:
-            return BookModel.objects.filter(category_id=pk)
+            return BookModel.objects.filter(category__id=pk)
         return BookModel.objects.order_by('-pk')
 
 
