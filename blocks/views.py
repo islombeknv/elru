@@ -1,3 +1,6 @@
+from requests import Response
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAdminUser
 
@@ -24,10 +27,13 @@ class MainBannerUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsAdminUser]
 
 
-class MainBannerDelateAPIView(DestroyAPIView):
-    serializer_class = MainBannerModalSerializer
-    queryset = MainBannerModal.objects.order_by('-pk')
-    permission_classes = [IsAdminUser]
+@api_view(['GET', 'POST'])
+@permission_classes([IsAdminUser])
+def MainBannerDelateAPIView(request):
+    tab = request.GET.getlist('d')
+    for i in tab:
+        MainBannerModal.objects.get(id=i).delete()
+    return Response(status=status.HTTP_200_OK)
 
 
 class CollectionCollectionListAPIView(ListAPIView):
@@ -47,10 +53,13 @@ class CollectionUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsAdminUser]
 
 
-class CollectionDelateAPIView(DestroyAPIView):
-    serializer_class = CollectionModelSerializer
-    queryset = CollectionModel.objects.order_by('-pk')
-    permission_classes = [IsAdminUser]
+@api_view(['GET', 'POST'])
+@permission_classes([IsAdminUser])
+def CollectionDelateAPIView(request):
+    tab = request.GET.getlist('d')
+    for i in tab:
+        CollectionModel.objects.get(id=i).delete()
+    return Response(status=status.HTTP_200_OK)
 
 
 class Top100BookListAPIView(ListAPIView):
@@ -70,10 +79,13 @@ class Top100BookUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsAdminUser]
 
 
-class Top100BookDelateAPIView(DestroyAPIView):
-    serializer_class = Top100BookModelSerializer
-    queryset = Top100BookModel.objects.order_by('-pk')
-    permission_classes = [IsAdminUser]
+@api_view(['GET', 'POST'])
+@permission_classes([IsAdminUser])
+def Top100BookDelateAPIView(request):
+    tab = request.GET.getlist('d')
+    for i in tab:
+        Top100BookModel.objects.get(id=i).delete()
+    return Response(status=status.HTTP_200_OK)
 
 
 class MonthBookListAPIView(ListAPIView):
@@ -93,10 +105,13 @@ class MonthBookUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsAdminUser]
 
 
-class MonthBookDelateAPIView(DestroyAPIView):
-    serializer_class = MonthBookModelSerializer
-    queryset = MonthBookModel.objects.order_by('-pk')
-    permission_classes = [IsAdminUser]
+@api_view(['GET', 'POST'])
+@permission_classes([IsAdminUser])
+def MonthBookDelateAPIView(request):
+    tab = request.GET.getlist('d')
+    for i in tab:
+        MonthBookModel.objects.get(id=i).delete()
+    return Response(status=status.HTTP_200_OK)
 
 
 class NetworkListAPIView(ListAPIView):
@@ -116,10 +131,13 @@ class NetworkUpdateAPIView(RetrieveUpdateAPIView):
     permission_classes = [IsAdminUser]
 
 
-class NetworkDelateAPIView(DestroyAPIView):
-    serializer_class = NetworkModalSerializer
-    queryset = NetworkModal.objects.order_by('-pk')
-    permission_classes = [IsAdminUser]
+@api_view(['GET', 'POST'])
+@permission_classes([IsAdminUser])
+def NetworkDelateAPIView(request):
+    tab = request.GET.getlist('d')
+    for i in tab:
+        NetworkModal.objects.get(id=i).delete()
+    return Response(status=status.HTTP_200_OK)
 
 
 class ApplicationsListAPIView(ListAPIView):
