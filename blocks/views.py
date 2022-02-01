@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
@@ -50,6 +50,12 @@ class CollectionCreateAPIView(CreateAPIView):
 class CollectionUpdateAPIView(RetrieveUpdateAPIView):
     serializer_class = CollectionModelSerializer
     queryset = CollectionModel.objects.order_by('-pk')
+    permission_classes = [IsAdminUser]
+
+
+class CollectionDetailAPIView(RetrieveAPIView):
+    serializer_class = CollectionModelSerializer
+    queryset = CollectionModel.objects.all()
     permission_classes = [IsAdminUser]
 
 

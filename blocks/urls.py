@@ -12,6 +12,7 @@ urlpatterns = [
     path('collection/create/', CollectionCreateAPIView.as_view()),
     path('collection/update/<int:pk>/', CollectionUpdateAPIView.as_view()),
     path('collection/delete/', CollectionDelateAPIView),
+    path('collection/detail/<int:pk>/', CollectionDetailAPIView.as_view()),
 
     path('top100/', Top100BookListAPIView.as_view()),
     path('top100/create/', Top100BookCreateAPIView.as_view()),
