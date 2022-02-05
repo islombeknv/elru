@@ -15,8 +15,8 @@ class PostListAPIView(ListAPIView):
 
 
 class PostCreateAPIView(CreateAPIView):
-    parser_classes = (MultiPartParser, FormParser)
     serializer_class = PostModelSerializer
+    queryset = PostModel.objects.order_by('-pk')
     permission_classes = [IsAdminUser]
 
 
